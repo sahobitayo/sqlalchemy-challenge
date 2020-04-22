@@ -18,18 +18,16 @@ I used Python and SQLAlchemy to do basic climate analysis and data exploration o
 - Use Pandas to print the summary statistics for the precipitation data.
 
 ## Station Analysis
-- Design a query to calculate the total number of stations.
-- Design a query to find the most active stations.
-  - List the stations and observation counts in descending order.
-  - Which station has the highest number of observations?
-
-- Design a query to retrieve the last 12 months of temperature observation data (TOBS).
-  - Filter by the station with the highest number of observations.
-  - Plot the results as a histogram with bins=12.
+  After analyzing precipitation data, I did a quick analysis of the station data. Specifically, I designed a query to show how many stations are available in this dataset. After that, I created another query to find the most active station (i.e., the station with the highest number of temperature observations.). Using the results from this query, I was able to calculate the lowest temperature recorded, the highest temperature recorded, and the average temperature of the most active station. Finally, I took the last 12 months of temperature observation data for the most active station and plotted the results as a histogram with bins=12.
   
 
 ## Climate App
 Design a Flask API based on the queries that you have just developed and use Flask to create your routes.
+To run the app:
+
+Clone or download this repository to a local directory on your computer.
+Change directory to the root directory (sqlalchemy-challenge) of this repository.
+Run python app.py from the root directory (sqlalchemy-challenge). The app starts up at localhost:5000 by default.
 
 ### Routes
 - /
@@ -57,9 +55,14 @@ Design a Flask API based on the queries that you have just developed and use Fla
 ## Bonus Analyses
 
 ### Temperature Analysis I
-- Hawaii is reputed to enjoy mild weather all year. Is there a meaningful difference between the temperature in, for example, June and December?
-- Identify the average temperature in June at all stations across all available years in the dataset. Do the same for December temperature.
-- Use the t-test to determine whether the difference in the means, if any, is statistically significant. Will you use a paired t-test, or an unpaired t-test? Why?
+
+Hawaii is reputed to enjoy mild weather all year. So, I wanted to determine if there is a meaningful difference between the temperature in, for example, June and December. To do this, I used SQLAlchemy to query the temperatures in June at all stations across all available years in the dataset. I also did the same query for December.
+
+After querying for the temperature data, I identified the average temperature for June and December, plotted the temperature values on a scatter plot to show the distribution of the values, and plotted those values on a histogram to show the difference in means. Just looking at the histogram, there appears to be a difference in the means for June and December.
+
+I decided to do an independent t-test. An independent t-test compares the means of 2 independent populations (June temperatures in Hawaii and December temperatures in Hawaii). We want to use an independent t-test (unpaired) rather than a paired t-test because we want to compare the means of two independent populations. A paired t-test (one sample t-test) looks at comparing the sample to the population, which we don't want in this case. Assumptions include data are normally distributed, data are independent, and data are homogenous (the standard deviations are roughly equal).
+
+The independent t-test was calculated using scipy.stats.ttest_ind from the scipy package. After calculating the results, it was determined that there is a statistically significant difference in means (p-value of less than 0.05). In other words, the p-value is a very small value, so the means of these two populations are significantly different, and there is a lower probability that the difference is random. As a result, we can reject the null hypothesis, which is that there is no meaningful difference between the temperature in June and December in Hawaii.
 
 ### Temperature Analysis II
 - Use the calc_temps function to calculate the min, avg, and max temperatures for your trip using the matching dates from the previous year (i.e., use "2017-01-01" if your trip start date was "2018-01-01").
