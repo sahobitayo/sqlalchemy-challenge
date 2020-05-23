@@ -77,3 +77,14 @@ The independent t-test was calculated using scipy.stats.ttest_ind from the scipy
 - Create a list of dates for your trip in the format %m-%d. Use the daily_normals function to calculate the normals for each date string and append the results to a list.
 - Load the list of daily normals into a Pandas DataFrame and set the index equal to the date.
 - Use Pandas to plot an area plot (stacked=False) for the daily normals.
+
+### Tools Used
+- **SQLAlchemy**
+- **Jupyter Notebook**
+- **Python**
+- **Matplotlib**
+- **Pandas**
+- **Flask**
+- **datetime**
+- **dateutil.relativedelta**
+- **Scipy**
